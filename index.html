@@ -67,7 +67,7 @@ pretty easy.</p>
 </ul>
 
 <p>You&rsquo;ll need your <code class="prettyprint">API_KEY</code> and <code class="prettyprint">API_SECRET</code> to authenticate, and getting ahold
-of those is easy, just login to the <a href="https://app.gorilla.io">Gorilla.io App</a>
+of those is easy. Just login to the <a href="https://app.gorilla.io">Gorilla.io App</a>
 and visit your <a href="https://app.gorilla.io/account">Account</a> tab. Those credentials
 should be clearly labeled on that screen.</p>
 
@@ -125,17 +125,17 @@ request to <code class="prettyprint">https://api.gorilla.io/forms</code>.</p>
 produced using the <a title="JSON Web Token" href="http://jwt.io/">JSON Web Token</a> format. There is probably already a JWT
 client written in your favorite language:</p>
 
-<p><aside class="notice">
-<strong>Your JWT library must be capable of creating tokens using <code class="prettyprint">HMAC</code> with
-<code class="prettyprint">SHA-256</code> as the signing algorithm.</strong>
-</aside></p>
-
 <ul>
 <li><a title="Ruby JWT" href="https://github.com/progrium/ruby-jwt"><strong>Ruby</strong></a></li>
 <li><a title="PHP JWT" href="https://github.com/firebase/php-jwt"><strong>PHP</strong></a></li>
 <li><a href="https://github.com/auth0/node-jsonwebtoken"><strong>Node</strong></a></li>
 <li>More can be found at the <a href="http://jwt.io/">JWT Website</a></li>
 </ul>
+
+<p><aside class="notice">
+<strong>Your JWT library must be capable of creating tokens using <code class="prettyprint">HMAC</code> with
+<code class="prettyprint">SHA-256</code> as the signing algorithm.</strong>
+</aside></p>
 <h3 id='token-parameters'>Token Parameters</h3>
 <p>The following parameters are <strong>required</strong> as part of your token. Order is not important.</p>
 
