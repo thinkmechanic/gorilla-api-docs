@@ -11,7 +11,7 @@ Authenticating with the Gorilla.io API is:
 * **required for every request.**
 
 You'll need your `API_KEY` and `API_SECRET` to authenticate, and getting ahold
-of those is easy, just login to the [Gorilla.io App](https://app.gorilla.io)
+of those is easy. Just login to the [Gorilla.io App](https://app.gorilla.io)
 and visit your [Account](https://app.gorilla.io/account) tab. Those credentials
 should be clearly labeled on that screen.
 
@@ -77,15 +77,15 @@ The Gorilla.io API **requires** every request to be signed using a token
 produced using the [JSON Web Token][jwt] format. There is probably already a JWT
 client written in your favorite language:
 
-<aside class="notice">
-**Your JWT library must be capable of creating tokens using `HMAC` with
-`SHA-256` as the signing algorithm.**
-</aside>
-
 * [**Ruby**][jwt-ruby]
 * [**PHP**][jwt-php]
 * [**Node**](https://github.com/auth0/node-jsonwebtoken)
 * More can be found at the [JWT Website](http://jwt.io/)
+
+<aside class="notice">
+**Your JWT library must be capable of creating tokens using `HMAC` with
+`SHA-256` as the signing algorithm.**
+</aside>
 
 ### Token Parameters
 
