@@ -1,6 +1,6 @@
 # Gorilla.io API Docs
 
-The API documentation for the (Gorilla.io API)[https://gorilla.io].
+The API documentation for the [Gorilla.io API](https://gorilla.io).
 
 See them live [here](https://docs.gorilla.io).
 
