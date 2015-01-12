@@ -9,6 +9,7 @@ toc_footers:
   - See an error? <a href='http://github.com/thinkmechanic/gorilla-api-docs'>Send a pull request.</a>
 
 includes:
+  - errors
   - authentication
 
 search: true
