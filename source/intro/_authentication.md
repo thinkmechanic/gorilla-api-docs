@@ -25,17 +25,22 @@ _Note:_ We do plan to add OAUTH Authentication support in the future.
 Authorization: Signature {API_KEY} {SIGNATURE}
 ```
 
+> Request authorization:
+
 ```http
-GET /forms HTTP/1.1
+GET /example HTTP/1.1
 User-Agent: Magilla/1.0.0
 Accept: application/vnd.gorilla.v1+json
-Authorization: Signature 123456 abcdef
+Authorization: Signature {API_KEY} {SIGNATURE}
 ```
 
 ```ruby
-# All requests with this client will be authenticated correctly
 require 'gorilla-io'
-client = Gorilla::Client.new(api_key, api_secret)
+
+Gorilla.configure do |c|
+  c.api.key = '{API_KEY}'
+  c.api.secret = '{API_SECRET}'
+end
 ```
 
 Authenticating your API requests consists simply of generating the correct
@@ -57,7 +62,7 @@ It contains three parts:
 ```php
 <?php
 
-$apiSecret = "YOUR-API-SECRET";
+$apiSecret = "your-api-key";
 
 // Generate a token expiring at midnight on Jan 1, 2015.
 // Please note that order here is important.
@@ -67,6 +72,7 @@ $token = JWT::encode(array(
   "path" => "/forms"
 ), $api_secret, 'HS256');
 ```
+> To test, the parameters above generate the following token:
 
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.XCzSh0vbNvtVaKAJ4NTT7gmV7bdV_ez36WfmibmwDyk

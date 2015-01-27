@@ -13,5 +13,8 @@ intro:
   - authentication
   - errors
 
+entities:
+  - account
+
 search: false
 ---

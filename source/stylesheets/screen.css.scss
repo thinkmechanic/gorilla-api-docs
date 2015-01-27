@@ -50,7 +50,7 @@ html, body {
 
 #toc {
   h4.section-header {
-    margin: 20px $nav-padding 5px;
+    margin: 20px $nav-padding 10px;
     padding: 0px 0px 5px;
     color: $nav-header-text;
     border-bottom: 1px solid $nav-header-text;
@@ -351,7 +351,7 @@ html, body {
   }
 }
 
-.content-intro {
+.content-intro, .content-entities {
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
@@ -549,7 +549,7 @@ html, body {
     background-color: $code-bg;
     color: #fff;
 
-    padding: 2em $main-padding;
+    padding: 1em;
     margin: 0;
     width: $examples-width;
 

@@ -48,6 +48,7 @@
   }
 
   $(function() { makeToc('intro') });
+  $(function() { makeToc('entities') });
   $(animate);
 
 })(window);

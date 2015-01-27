@@ -70,6 +70,9 @@ under the License.
       <div id="toc">
         <h4 class='section-header'>API</h4>
         <div id="toc-intro"></div>
+
+        <h4 class='section-header'>Entities</h4>
+        <div id="toc-entities"></div>
       </div>
       <% if current_page.data.toc_footers %>
         <ul class="toc-footer">
@@ -86,6 +89,12 @@ under the License.
         <div class='content-intro'>
           <% current_page.data.intro && current_page.data.intro.each do |intro| %>
             <%= partial "intro/#{intro}" %>
+          <% end %>
+        </div>
+
+        <div class='content-entities'>
+          <% current_page.data.entities && current_page.data.entities.each do |entity| %>
+            <%= partial "entities/#{entity}" %>
           <% end %>
         </div>
       </div>
