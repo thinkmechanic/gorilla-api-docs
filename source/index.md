@@ -8,20 +8,10 @@ language_tabs:
 toc_footers:
   - See an error? <a href='http://github.com/thinkmechanic/gorilla-api-docs'>Send a pull request.</a>
 
-includes:
+intro:
+  - introduction
   - authentication
   - errors
 
-search: true
+search: false
 ---
-
-# Introduction
-
-Welcome to the [Gorilla.io](https://gorilla.io/) API docs.
-
-Getting yourself setup to use our API with your favorite programming language is
-pretty easy.
-
-```ruby
-gem 'gorilla-io'
-```
