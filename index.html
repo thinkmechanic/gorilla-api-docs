@@ -9,7 +9,7 @@
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script src="javascripts/all.js" type="text/javascript"></script>
+      <script src="javascripts/all_nosearch.js" type="text/javascript"></script>
 
       <script>
         $(function() {
@@ -32,11 +32,12 @@
               <a href="#" data-language-name="http">http</a>
               <a href="#" data-language-name="ruby">ruby</a>
         </div>
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <div id="toc">
+        <h4 class='section-header'>API</h4>
+        <div id="toc-intro"></div>
+
+        <h4 class='section-header'>Entities</h4>
+        <div id="toc-entities"></div>
       </div>
         <ul class="toc-footer">
             <li>See an error? <a href='http://github.com/thinkmechanic/gorilla-api-docs'>Send a pull request.</a></li>
@@ -45,7 +46,9 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
+        
+        <div class='content-intro'>
+            <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the <a href="https://gorilla.io/">Gorilla.io</a> API docs.</p>
 
 <p>Getting yourself setup to use our API with your favorite programming language is
@@ -53,7 +56,7 @@ pretty easy.</p>
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'gorilla-io'</span>
 </code></pre>
 
-          <h1 id='authentication'>Authentication</h1>
+            <h1 id='authentication'>Authentication</h1>
 <p><aside class="notice">
 <strong>Always keep your <code class="prettyprint">API_KEY</code> and <code class="prettyprint">API_SECRET</code> private.</strong>
 </aside></p>
@@ -78,14 +81,21 @@ should be clearly labeled on that screen.</p>
 </blockquote>
 <pre><code class="highlight plaintext">Authorization: Signature {API_KEY} {SIGNATURE}
 </code></pre>
-<pre><code class="highlight http"><span class="nf">GET</span> <span class="nn">/forms</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+
+<blockquote>
+<p>Request authorization:</p>
+</blockquote>
+<pre><code class="highlight http"><span class="nf">GET</span> <span class="nn">/example</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">User-Agent</span><span class="p">:</span> <span class="s">Magilla/1.0.0</span>
 <span class="na">Accept</span><span class="p">:</span> <span class="s">application/vnd.gorilla.v1+json</span>
-<span class="na">Authorization</span><span class="p">:</span> <span class="s">Signature 123456 abcdef</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Signature {API_KEY} {SIGNATURE}</span>
 </code></pre>
-<pre><code class="highlight ruby"><span class="c1"># All requests with this client will be authenticated correctly</span>
-<span class="nb">require</span> <span class="s1">'gorilla-io'</span>
-<span class="n">client</span> <span class="o">=</span> <span class="no">Gorilla</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'gorilla-io'</span>
+
+<span class="no">Gorilla</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+  <span class="n">c</span><span class="p">.</span><span class="nf">api</span><span class="p">.</span><span class="nf">key</span> <span class="o">=</span> <span class="s1">'{API_KEY}'</span>
+  <span class="n">c</span><span class="p">.</span><span class="nf">api</span><span class="p">.</span><span class="nf">secret</span> <span class="o">=</span> <span class="s1">'{API_SECRET}'</span>
+<span class="k">end</span>
 </code></pre>
 
 <p>Authenticating your API requests consists simply of generating the correct
@@ -107,7 +117,7 @@ request to <code class="prettyprint">https://api.gorilla.io/forms</code>.</p>
 </blockquote>
 <pre><code class="highlight php"><span class="cp">&lt;?php</span>
 
-<span class="nv">$apiSecret</span> <span class="o">=</span> <span class="s2">"YOUR-API-SECRET"</span><span class="p">;</span>
+<span class="nv">$apiSecret</span> <span class="o">=</span> <span class="s2">"your-api-key"</span><span class="p">;</span>
 
 <span class="c1">// Generate a token expiring at midnight on Jan 1, 2015.
 // Please note that order here is important.
@@ -117,6 +127,10 @@ request to <code class="prettyprint">https://api.gorilla.io/forms</code>.</p>
   <span class="s2">"path"</span> <span class="o">=&gt;</span> <span class="s2">"/forms"</span>
 <span class="p">),</span> <span class="nv">$api_secret</span><span class="p">,</span> <span class="s1">'HS256'</span><span class="p">);</span>
 </code></pre>
+
+<blockquote>
+<p>To test, the parameters above generate the following token:</p>
+</blockquote>
 <pre><code class="highlight plaintext">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.XCzSh0vbNvtVaKAJ4NTT7gmV7bdV_ez36WfmibmwDyk
 </code></pre>
 
@@ -165,7 +179,7 @@ defined in these docs.
 </tr>
 </tbody></table>
 
-          <h1 id='errors'>Errors</h1>
+            <h1 id='errors'>Errors</h1>
 <p>Gorilla.io uses basic HTTP response codes to indicate success or failure of a
 request. For the most part, codes in the <code class="prettyprint">2xx</code> range indicate a success, codes
 in the <code class="prettyprint">4xx</code> range indicate a failure due to the information provided by the
@@ -199,6 +213,49 @@ containing the following attributes:</p>
 </tr>
 </tbody></table>
 
+        </div>
+
+        <div class='content-entities'>
+            <h1 id='account'>Account</h1>
+<p>This object represents both the <strong>User</strong> making the request and the
+<strong>Account</strong> that User belongs to.</p>
+<h2 id='retrieving-account-information'>Retrieving Account information</h2>
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre><code class="highlight http"><span class="nf">GET</span> <span class="nn">/account</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">User-Agent</span><span class="p">:</span> <span class="s">Magilla/1.0.0</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/vnd.gorilla.v1+json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Signature 123456 abcdef</span>
+</code></pre>
+<pre><code class="highlight ruby"><span class="no">Gorilla</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">get</span>
+</code></pre>
+
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mgorilla@magilla.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Magilla"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Gorilla"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Magilla Widgets Co."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-01T00:00:00.000Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>It may be confusing that this endpoint
+returns a top-level <code class="prettyprint">user</code> key instead of an <code class="prettyprint">account</code> key, but for the purposes
+of the API, the API signature represents a User, so we return information about
+that user, <strong>as well as</strong> the account they belong to.</p>
+
+        </div>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
