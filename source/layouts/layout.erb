@@ -68,6 +68,8 @@ under the License.
         <ul class="search-results"></ul>
       <% end %>
       <div id="toc">
+        <h4 class='section-header'>API</h4>
+        <div id="toc-intro"></div>
       </div>
       <% if current_page.data.toc_footers %>
         <ul class="toc-footer">
@@ -81,9 +83,11 @@ under the License.
       <div class="dark-box"></div>
       <div class="content">
         <%= yield %>
-        <% current_page.data.includes && current_page.data.includes.each do |include| %>
-          <%= partial "includes/#{include}" %>
-        <% end %>
+        <div class='content-intro'>
+          <% current_page.data.intro && current_page.data.intro.each do |intro| %>
+            <%= partial "intro/#{intro}" %>
+          <% end %>
+        </div>
       </div>
       <div class="dark-box">
         <% if language_tabs %>

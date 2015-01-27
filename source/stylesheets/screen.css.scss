@@ -48,6 +48,15 @@ html, body {
   width: 20px;
 }
 
+#toc {
+  h4.section-header {
+    margin: 20px $nav-padding 5px;
+    padding: 0px 0px 5px;
+    color: $nav-header-text;
+    border-bottom: 1px solid $nav-header-text;
+  }
+}
+
 @mixin embossed-bg {
   @include background(
     linear-gradient(top,
@@ -340,6 +349,9 @@ html, body {
     display: block;
     clear: both;
   }
+}
+
+.content-intro {
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;

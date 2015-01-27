@@ -5,9 +5,16 @@
     $("#nav-button").removeClass('open');
   };
 
-  var makeToc = function() {
-    global.toc = $("#toc").tocify({
-      selectors: 'h1, h2',
+  var makeToc = function(section) {
+    var sectionSelector = '#toc-' + section,
+        itemSelectors = $.map(['h1', 'h2'], function(item) {
+          return '.content-' + section + '>' + item;
+        }).join(', ');
+
+    console.log(sectionSelector, itemSelectors);
+
+    global.toc = $(sectionSelector).tocify({
+      selectors: itemSelectors,
       extendPage: false,
       theme: 'none',
       smoothScroll: false,
@@ -40,8 +47,7 @@
     }, 50);
   }
 
-  $(makeToc);
+  $(function() { makeToc('intro') });
   $(animate);
 
 })(window);
-
