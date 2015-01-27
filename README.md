@@ -1,5 +1,7 @@
 # Gorilla.io API Docs
 
+[ ![Codeship Status for thinkmechanic/gorilla-api-docs](https://codeship.com/projects/165b64b0-7ca9-0132-bd94-0e6828aecb88/status?branch=master)](https://codeship.com/projects/56457)
+
 The API documentation for the [Gorilla.io API](http://gorilla.io).
 
 See them live [here](http://docs.gorilla.io).
