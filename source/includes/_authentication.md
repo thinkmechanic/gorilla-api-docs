@@ -57,20 +57,19 @@ It contains three parts:
 ```php
 <?php
 
-$apiKey    = "YOUR-API-KEY";
 $apiSecret = "YOUR-API-SECRET";
 
 // Generate a token expiring at midnight on Jan 1, 2015.
+// Please note that order here is important.
 $token = JWT::encode(array(
   "exp" => strtotime("2015-01-01 00:00:00"),
-  "iss" => $api_key,
   "method" => "GET",
   "path" => "/forms"
 ), $api_secret, 'HS256');
 ```
 
 ```
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsImlzcyI6IllPVVItQVBJLUtFWSIsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.n6ifGMuug2hmvtY6MxLSG6-j3Cbn4MRACJW6yz8OZUQ
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.XCzSh0vbNvtVaKAJ4NTT7gmV7bdV_ez36WfmibmwDyk
 ```
 
 The Gorilla.io API **requires** every request to be signed using a token
@@ -82,19 +81,21 @@ client written in your favorite language:
 * [**Node**](https://github.com/auth0/node-jsonwebtoken)
 * More can be found at the [JWT Website](http://jwt.io/)
 
-<aside class="notice">
 **Your JWT library must be capable of creating tokens using `HMAC` with
-`SHA-256` as the signing algorithm.**
-</aside>
+`SHA-256` (or `HS256`) as the signing algorithm.**
 
 ### Token Parameters
 
-The following parameters are **required** as part of your token. Order is not important.
+<aside class="warning">
+The order your parameters are passed should match the order that they are
+defined in these docs.
+</aside>
+
+The following parameters are **required** as part of your token. Order is important.
 
 Parameter | Type    | Description
 ----------|---------|------------
 `exp`     | Integer | A UNIX timestamp for when this signature expires.
-`iss`     | String  | Your api key as the issuer of the request.
 `method`  | String  | The intended HTTP request method (eg `GET`).
 `path`    | String  | The intended HTTP request path (eg `/forms`).
 
