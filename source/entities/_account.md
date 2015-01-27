@@ -16,7 +16,7 @@ Authorization: Signature 123456 abcdef
 ```
 
 ```ruby
-Gorilla::Account.get
+Gorilla::Account.fetch
 ```
 
 > Example Response:
