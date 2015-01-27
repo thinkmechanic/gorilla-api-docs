@@ -107,18 +107,17 @@ request to <code class="prettyprint">https://api.gorilla.io/forms</code>.</p>
 </blockquote>
 <pre><code class="highlight php"><span class="cp">&lt;?php</span>
 
-<span class="nv">$apiKey</span>    <span class="o">=</span> <span class="s2">"YOUR-API-KEY"</span><span class="p">;</span>
 <span class="nv">$apiSecret</span> <span class="o">=</span> <span class="s2">"YOUR-API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// Generate a token expiring at midnight on Jan 1, 2015.
+// Please note that order here is important.
 </span><span class="nv">$token</span> <span class="o">=</span> <span class="nx">JWT</span><span class="o">::</span><span class="na">encode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
   <span class="s2">"exp"</span> <span class="o">=&gt;</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s2">"2015-01-01 00:00:00"</span><span class="p">),</span>
-  <span class="s2">"iss"</span> <span class="o">=&gt;</span> <span class="nv">$api_key</span><span class="p">,</span>
   <span class="s2">"method"</span> <span class="o">=&gt;</span> <span class="s2">"GET"</span><span class="p">,</span>
   <span class="s2">"path"</span> <span class="o">=&gt;</span> <span class="s2">"/forms"</span>
 <span class="p">),</span> <span class="nv">$api_secret</span><span class="p">,</span> <span class="s1">'HS256'</span><span class="p">);</span>
 </code></pre>
-<pre><code class="highlight plaintext">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsImlzcyI6IllPVVItQVBJLUtFWSIsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.n6ifGMuug2hmvtY6MxLSG6-j3Cbn4MRACJW6yz8OZUQ
+<pre><code class="highlight plaintext">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MjAwODg0MDAsIm1ldGhvZCI6IkdFVCIsInBhdGgiOiIvZm9ybXMifQ.XCzSh0vbNvtVaKAJ4NTT7gmV7bdV_ez36WfmibmwDyk
 </code></pre>
 
 <p>The Gorilla.io API <strong>requires</strong> every request to be signed using a token
@@ -132,12 +131,15 @@ client written in your favorite language:</p>
 <li>More can be found at the <a href="http://jwt.io/">JWT Website</a></li>
 </ul>
 
-<p><aside class="notice">
-<strong>Your JWT library must be capable of creating tokens using <code class="prettyprint">HMAC</code> with
-<code class="prettyprint">SHA-256</code> as the signing algorithm.</strong>
-</aside></p>
+<p><strong>Your JWT library must be capable of creating tokens using <code class="prettyprint">HMAC</code> with
+<code class="prettyprint">SHA-256</code> (or <code class="prettyprint">HS256</code>) as the signing algorithm.</strong></p>
 <h3 id='token-parameters'>Token Parameters</h3>
-<p>The following parameters are <strong>required</strong> as part of your token. Order is not important.</p>
+<p><aside class="warning">
+The order your parameters are passed should match the order that they are
+defined in these docs.
+</aside></p>
+
+<p>The following parameters are <strong>required</strong> as part of your token. Order is important.</p>
 
 <table><thead>
 <tr>
@@ -152,11 +154,6 @@ client written in your favorite language:</p>
 <td>A UNIX timestamp for when this signature expires.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">iss</code></td>
-<td>String</td>
-<td>Your api key as the issuer of the request.</td>
-</tr>
-<tr>
 <td><code class="prettyprint">method</code></td>
 <td>String</td>
 <td>The intended HTTP request method (eg <code class="prettyprint">GET</code>).</td>
@@ -165,6 +162,40 @@ client written in your favorite language:</p>
 <td><code class="prettyprint">path</code></td>
 <td>String</td>
 <td>The intended HTTP request path (eg <code class="prettyprint">/forms</code>).</td>
+</tr>
+</tbody></table>
+
+          <h1 id='errors'>Errors</h1>
+<p>Gorilla.io uses basic HTTP response codes to indicate success or failure of a
+request. For the most part, codes in the <code class="prettyprint">2xx</code> range indicate a success, codes
+in the <code class="prettyprint">4xx</code> range indicate a failure due to the information provided by the
+client, and codes in the <code class="prettyprint">5xx</code> range indicate a server error on our part.</p>
+<h2 id='error-responses'>Error Responses</h2><pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validation_error"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"is required"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Whenever possible, we will return an <code class="prettyprint">error</code> object in the JSON response
+containing the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">type</code></td>
+<td>The type of error. See our error types for more info.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">message</code></td>
+<td>A human-readable message describing the error.</td>
 </tr>
 </tbody></table>
 
