@@ -16,11 +16,11 @@ Content-type: multipart/form-data, boundary=--XXXXXX
 Content-Length: 1024
 
 --XXXXXX
-content-disposition: form-data; name="title"
+Content-Disposition: form-data; name="title"
 
 Form 1099
 --XXXXX
-content-disposition: form-data; name="document"; filename="1099.pdf"
+Content-Disposition: form-data; name="document"; filename="1099.pdf"
 Content-Type: application/pdf
 
 {Contents of 1099.pdf}
