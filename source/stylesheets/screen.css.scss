@@ -55,6 +55,10 @@ html, body {
     color: $nav-header-text;
     border-bottom: 1px solid $nav-header-text;
   }
+
+  #tocify-header3 {
+    margin-top: 20px;
+  }
 }
 
 @mixin embossed-bg {
@@ -351,7 +355,7 @@ html, body {
   }
 }
 
-.content-intro, .content-entities {
+.content-section {
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;

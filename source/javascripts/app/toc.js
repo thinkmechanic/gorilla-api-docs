@@ -47,8 +47,6 @@
     }, 50);
   }
 
-  $(function() { makeToc('intro') });
-  $(function() { makeToc('entities') });
+  $(function() { makeToc('section') });
   $(animate);
-
 })(window);

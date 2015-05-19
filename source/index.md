@@ -8,13 +8,12 @@ language_tabs:
 toc_footers:
   - See an error? <a href='http://github.com/thinkmechanic/gorilla-api-docs'>Send a pull request.</a>
 
-intro:
+sections:
   - introduction
   - authentication
   - errors
-
-entities:
   - account
+  - forms
 
 search: false
 ---
