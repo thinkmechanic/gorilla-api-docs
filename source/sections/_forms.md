@@ -86,6 +86,7 @@ end
 {
   "form": {
     "id": "21e1df27020b5fb4",
+    "account_id": 123,
     "title": "Form 1099",
     "status": "pending",
     "size": 1024,
@@ -140,6 +141,7 @@ form = Gorilla::Form.find('21e1df27020b5fb4')
 {
   "form": {
     "id": "21e1df27020b5fb4",
+    "account_id": 123,
     "title": "New Form Title",
     "status": "processed",
     "size": 1024,
@@ -148,11 +150,13 @@ form = Gorilla::Form.find('21e1df27020b5fb4')
     "fields": [
       {
         "id": 123,
+        "form_id": "21e1df27020b5fb4",
         "field_name": "Your_First_Name_Here",
         "api_field_name": "first_name"
       },
       {
         "id": 124,
+        "form_id": "21e1df27020b5fb4",
         "field_name": "Your_Last_Name_Here",
         "api_field_name": "last_name"
       }
@@ -203,6 +207,7 @@ Gorilla::Form.update!('21e1df27020b5fb4', {
 {
   "form": {
     "id": "21e1df27020b5fb4",
+    "account_id": 123,
     "title": "New Form Title",
     "status": "processed",
     "size": 1024,
@@ -211,11 +216,13 @@ Gorilla::Form.update!('21e1df27020b5fb4', {
     "fields": [
       {
         "id": 123,
+        "form_id": "21e1df27020b5fb4",
         "field_name": "Your_First_Name_Here",
         "api_field_name": "first_name"
       },
       {
         "id": 124,
+        "form_id": "21e1df27020b5fb4",
         "field_name": "Your_Last_Name_Here",
         "api_field_name": "last_name"
       }
@@ -265,6 +272,7 @@ forms = Gorilla::Form.all(page: 2)
   "forms": [
     {
       "id": "21e1df27020b5fb4",
+      "account_id": 123,
       "title": "New Form Title",
       "status": "processed",
       "size": 1024,
@@ -273,11 +281,13 @@ forms = Gorilla::Form.all(page: 2)
       "fields": [
         {
           "id": 123,
+          "form_id": "21e1df27020b5fb4",
           "field_name": "Your_First_Name_Here",
           "api_field_name": "first_name"
         },
         {
           "id": 124,
+          "form_id": "21e1df27020b5fb4",
           "field_name": "Your_Last_Name_Here",
           "api_field_name": "last_name"
         }
