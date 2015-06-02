@@ -20,20 +20,22 @@ under the License.
 ////////////////////////////////////////////////////////////////////////////////
 // Use these settings to help adjust the appearance of Slate
 
+$gorilla-green: #18bc9c;
 
 // BACKGROUND COLORS
 ////////////////////
-$nav-bg: #393939;
-$examples-bg: #393939;
-$code-bg: #292929;
-$code-annotation-bg: #1c1c1c;
-$nav-subitem-bg: #262626;
-$nav-active-bg: #2467af;
+$nav-bg: #fafcfc;
+$nav-border: desaturate(#f0f4f7, 25%);
+$examples-bg: #2D3134;
+$code-bg: #272b2d;
+$code-annotation-bg: $examples-bg;
+$nav-subitem-bg: $nav-bg;
+$nav-active-bg: $nav-bg;
 $lang-select-border: #000;
-$lang-select-bg: #222;
-$lang-select-active-bg: $examples-bg; // feel free to change this to blue or something
-$lang-select-pressed-bg: #111; // color of language tab bg when mouse is pressed
-$main-bg: #eaf2f6;
+$lang-select-bg: #242729;
+$lang-select-active-bg: $gorilla-green;
+$lang-select-pressed-bg: #777;
+$main-bg: #ffffff;
 $aside-notice-bg: #8fbcd4;
 $aside-warning-bg: #c97a7e;
 $aside-success-bg: #6ac174;
@@ -43,9 +45,11 @@ $search-notice-bg: #c97a7e;
 // TEXT COLORS
 ////////////////////
 $main-text: #333; // main content text color
-$nav-text: #fff;
+$nav-text: #333;
+$title-text: $gorilla-green;
 $nav-header-text: #777;
-$nav-active-text: #fff;
+$nav-subheader-text: #555;
+$nav-active-text: $title-text;
 $lang-select-text: #fff; // color of unselected language tab text
 $lang-select-active-text: #fff; // color of selected language tab text
 $lang-select-pressed-text: #fff; // color of language tab text when mouse is pressed
@@ -53,13 +57,13 @@ $lang-select-pressed-text: #fff; // color of language tab text when mouse is pre
 
 // SIZES
 ////////////////////
-$nav-width: 230px; // width of the navbar
+$nav-width: 250px; // width of the navbar
 $examples-width: 50%; // portion of the screen taken up by code examples
 $logo-margin: 20px; // margin between nav items and logo, ignored if search is active
 $main-padding: 28px; // padding to left and right of content & examples
-$nav-padding: 15px; // padding to left and right of navbar
+$nav-padding: 10px; // padding to left and right of navbar
 $nav-v-padding: 10px; // padding used vertically around search boxes and results
-$nav-indent: 10px; // extra padding for ToC subitems
+$nav-indent: 15px; // extra padding for ToC subitems
 $code-annotation-padding: 8px; // padding inside code annotations
 $h1-margin-bottom: 21px; // padding under the largest header tags
 $tablet-width: 930px; // min width before reverting to tablet size
@@ -69,13 +73,15 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
 // FONTS
 ////////////////////
 %default-font {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 %header-font {
-  @extend %default-font;
+  font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
+  font-weight: 600;
 }
 
 %code-font {
@@ -87,8 +93,8 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
 
 // OTHER
 ////////////////////
-$nav-active-shadow: #000;
-$nav-footer-border-color: #666;
+$nav-active-shadow: #fff;
+$nav-footer-border-color: $nav-bg;
 $nav-embossed-border-top: #000;
 $nav-embossed-border-bottom: #939393;
 $main-embossed-text-shadow: 0px 1px 0px #fff;

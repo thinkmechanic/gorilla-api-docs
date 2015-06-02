@@ -79,6 +79,16 @@ html, body {
   );
 }
 
+#page-title {
+  padding: $nav-padding;
+  font-family: Abel;
+  font-size: 26px;
+  color: $title-text;
+  text-shadow: 0px 1px 1px #eeeeee;
+  border-bottom: 1px solid $nav-border;
+  margin-bottom: $nav-padding;
+}
+
 .tocify-wrapper {
   @include transition(left ease-in-out 0.3s);
   overflow-y: auto;
@@ -90,6 +100,7 @@ html, body {
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
+  border: 1px solid $nav-border;
   font-size: 13px;
   font-weight: bold;
 
@@ -169,11 +180,13 @@ html, body {
 
 
   .tocify-item>a, .toc-footer li {
-    padding: 0 $nav-padding 0 $nav-padding;
+    padding: 3px $nav-padding;
     display: block;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    @extend %header-font;
+    font-size: 16px;
   }
 
   // The Table of Contents is composed of multiple nested
@@ -206,15 +219,18 @@ html, body {
     display: none; // tocify will override this when needed
     background-color: $nav-subitem-bg;
     font-weight: 500;
-    .tocify-item>a {
-      padding-left: $nav-padding + $nav-indent;
-      font-size: 12px;
-    }
 
-    // for embossed look:
-    @include embossed-bg;
-    &>li:last-child {
-      box-shadow: none; // otherwise it'll overflow out of the subheader
+    .tocify-item {
+      & > a {
+        $left: $nav-padding + $nav-indent;
+        padding: 0 $nav-padding 0 $left;
+        font-size: 14px;
+        color: $nav-subheader-text;
+      }
+
+      &.tocify-focus > a {
+        color: $nav-active-text;
+      }
     }
   }
 
@@ -304,7 +320,7 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    padding: 10px;
   }
 }
 
@@ -312,13 +328,16 @@ html, body {
   background-color: $lang-select-bg;
   width: 100%;
   font-weight: bold;
+
   a {
     display: block;
     float:left;
     color: $lang-select-text;
     text-decoration: none;
-    padding: 0 10px;
-    line-height: 30px;
+    padding: 4px 10px 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+    outline: none;
 
     &:active {
       background-color: $lang-select-pressed-bg;
@@ -357,12 +376,19 @@ html, body {
 
 .content-section {
 
+  a {
+    color: $gorilla-green;
+  }
+
+  code {
+    font-weight: bold;
+  }
+
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
     padding: 0 $main-padding;
     @include box-sizing(border-box);
     display: block;
-    @include text-shadow($main-embossed-text-shadow);
 
     @extend %left-col;
   }
@@ -381,13 +407,11 @@ html, body {
     font-size: 30px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
+    border-top: 2px solid lighten($gorilla-green, 50%);
+    border-bottom: 1px solid lighten(#ddd, 8%);
     margin-bottom: $h1-margin-bottom;
-    margin-top: 2em;
-    border-top: 1px solid #ddd;
-    @include background-image(
-      linear-gradient(top, #fff, #f9f9f9)
-    );
+    margin-top: 3em;
+
   }
 
   h1:first-child, div:first-child + h1 {
@@ -417,10 +441,12 @@ html, body {
 
   h3, h4, h5, h6 {
     @extend %header-font;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 700;
     margin-top: 2.5em;
     margin-bottom: 0.8em;
     text-transform: uppercase;
+    color: #444;
   }
 
   h4, h5, h6 {
@@ -498,20 +524,19 @@ html, body {
   aside {
     padding-top: 1em;
     padding-bottom: 1em;
-    @include text-shadow(0 1px 0 lighten($aside-notice-bg, 15%));
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     background: $aside-notice-bg;
-    line-height: 1.6;
+    line-height: 18px;
+    font-weight: bold;
+    font-size: 14px;
 
     &.warning {
       background-color: $aside-warning-bg;
-      @include text-shadow(0 1px 0 lighten($aside-warning-bg, 15%));
     }
 
     &.success {
       background-color: $aside-success-bg;
-      @include text-shadow(0 1px 0 lighten($aside-success-bg, 15%));
     }
   }
 
@@ -550,10 +575,8 @@ html, body {
 
 .content {
   pre, blockquote {
-    background-color: $code-bg;
     color: #fff;
-
-    padding: 1em;
+    padding: 20px;
     margin: 0;
     width: $examples-width;
 
@@ -576,16 +599,14 @@ html, body {
 
   pre {
     @extend %code-font;
+    background-color: $code-bg;
   }
 
   blockquote {
     &>p {
-      background-color: $code-annotation-bg;
-      border-radius: 5px;
-      padding: $code-annotation-padding;
-      color: #ccc;
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #404040;
+      color: #eeeeee;
+      @extend %header-font;
+      font-size: 14px;
     }
   }
 }
