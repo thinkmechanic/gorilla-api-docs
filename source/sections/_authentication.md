@@ -1,9 +1,5 @@
 # Authentication
 
-<aside class="notice">
-**Always keep your `API_KEY` and `API_SECRET` private.**
-</aside>
-
 Authenticating with the Gorilla.io API is:
 
 * **super simple.**
