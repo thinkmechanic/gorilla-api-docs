@@ -375,6 +375,7 @@ html, body {
 }
 
 .content-section {
+  padding-bottom: 710px;
 
   a {
     color: $gorilla-green;
@@ -407,7 +408,7 @@ html, body {
     font-size: 30px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    border-top: 2px solid lighten($gorilla-green, 50%);
+    border-top: 3px solid lighten($gorilla-green, 50%);
     border-bottom: 1px solid lighten(#ddd, 8%);
     margin-bottom: $h1-margin-bottom;
     margin-top: 3em;
@@ -462,6 +463,8 @@ html, body {
   table {
     margin-bottom: 1em;
     overflow: auto;
+    /* width: 100%; */
+
     th,td {
       text-align: left;
       vertical-align: top;
@@ -469,13 +472,21 @@ html, body {
     }
 
     th {
-      padding: 5px 10px;
+      padding: 5px;
       border-bottom: 1px solid #ccc;
       vertical-align: bottom;
     }
 
     td {
-      padding: 10px;
+      padding: 5px;
+    }
+
+    tr > td:first-child {
+      white-space: nowrap;
+    }
+
+    tr {
+      border-bottom: 1px solid #eeeeee;
     }
 
     tr:last-child {

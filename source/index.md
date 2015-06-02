@@ -14,6 +14,7 @@ sections:
   - errors
   - account
   - forms
+  - merges
 
 search: false
 ---
