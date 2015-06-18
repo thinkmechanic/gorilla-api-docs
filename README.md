@@ -1,10 +1,11 @@
-# Gorilla.io API Docs
+# Gorilla.io Docs
 
-[ ![Codeship Status for thinkmechanic/gorilla-api-docs](https://codeship.com/projects/165b64b0-7ca9-0132-bd94-0e6828aecb88/status?branch=master)](https://codeship.com/projects/56457)
-
-The API documentation for the [Gorilla.io API](http://gorilla.io).
+The documentation site for the [Gorilla.io](http://gorilla.io).
 
 See them live [here](http://docs.gorilla.io).
+
+* [Homepage][home]
+* [API Docs][api]
 
 ## Contributing
 
@@ -29,4 +30,7 @@ You're going to need:
 
 ## Acknowledgments
 
-Built using [Slate](http://tripit.github.io/slate).
+Most of these docs were built using [Slate](http://tripit.github.io/slate).
+
+[home]: http://docs.gorilla.io
+[api]: http://docs.gorilla.io/api

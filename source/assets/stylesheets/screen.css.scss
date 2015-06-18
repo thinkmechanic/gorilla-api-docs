@@ -86,7 +86,30 @@ html, body {
   color: $title-text;
   text-shadow: 0px 1px 1px #eeeeee;
   border-bottom: 1px solid $nav-border;
-  margin-bottom: $nav-padding;
+}
+
+#versions {
+  padding: $nav-padding;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid $nav-border;
+
+  a {
+    padding: 3px 12px 4px;
+    text-decoration: none;
+    color: $title-text;
+    margin-right: 5px;
+    border-radius: 4px;
+
+    &.active, &:hover {
+      color: #fff;
+      background-color: $title-text;
+    }
+
+    &:hover {
+      background-color: lighten($title-text, 5%);
+    }
+  }
 }
 
 .tocify-wrapper {

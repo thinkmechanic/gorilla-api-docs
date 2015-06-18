@@ -58,6 +58,15 @@ under the License.
 
       <div id="page-title">Gorilla.io API Docs</div>
 
+      <% if current_page.data.versions %>
+        <div id="versions">
+          <% current_page.data.versions.each do |version| %>
+            <% klass = version[:active] ? 'active' : '' %>
+            <%= link_to version[:title], version[:path], class: klass %>
+          <% end %>
+        </div>
+      <% end %>
+
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
@@ -92,8 +101,8 @@ under the License.
         <%= yield %>
 
         <div class='content-section'>
-          <% current_page.data.sections.each do |intro| %>
-            <%= partial "sections/#{intro}" %>
+          <% current_page.data.sections.each do |section| %>
+            <%= partial section %>
           <% end %>
         </div>
       </div>
