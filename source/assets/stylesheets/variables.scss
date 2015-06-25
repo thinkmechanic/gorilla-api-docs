@@ -93,7 +93,7 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
 
 // OTHER
 ////////////////////
-$nav-active-shadow: #fff;
+$nav-active-shadow: $nav-bg;
 $nav-footer-border-color: $nav-bg;
 $nav-embossed-border-top: #000;
 $nav-embossed-border-bottom: #939393;

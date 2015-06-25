@@ -5,29 +5,30 @@ be re-used when creating merges.
 
 ## The form object
 
+> Example Data:
+
 ```json
 {
-  "form": {
-    "id": "21e1df27020b5fb4",
-    "account_id": 123,
-    "title": "New Form Title",
-    "status": "processed",
-    "size": 1024,
-    "original_file_name": "1099.pdf",
-    "created_at": "2015-01-01T00:00:00.000Z",
-    "fields": [
-      {
-        "id": 123,
-        "field_name": "Your_First_Name_Here",
-        "api_field_name": "first_name"
-      },
-      {
-        "id": 124,
-        "field_name": "Your_Last_Name_Here",
-        "api_field_name": "last_name"
-      }
-    ]
-  }
+  "id": "frm_21e1df27020b5f",
+  "account_id": "act_1988a58e3dedab",
+  "title": "Form 1099",
+  "status": "processed",
+  "size": 1024,
+  "original_file_name": "1099.pdf",
+  "created_at": "2015-01-01T00:00:00.000Z",
+  "fields": [
+    {
+      "id": "fld_f1e30ff88db161",
+      "form_id": "frm_21e1df27020b5f",
+      "field_name": "Your_First_Name_Here",
+      "api_field_name": "first_name"
+    },
+    {
+      "id": "fld_10aa8c812d14dc",
+      "field_name": "Your_Last_Name_Here",
+      "api_field_name": "last_name"
+    }
+  ]
 }
 ```
 
@@ -42,15 +43,10 @@ Name | Type | Description
 `size` | Integer | The size of the form in bytes.
 `original_file_name` | String | The name of the file as it was uploaded.
 `created_at` | Time | The date the form was created.
-`fields` | Array | List of fields detected in the form.
+`fields` | Array | List of Field objects detected in the form.
 
 
 ## Creating a form
-
-When creating a **Form**, it will respond with a `pending` status almost 99.99%
-of the time. That's because forms and their fields are processed in a background
-queue and that may not happen immediately. For the same reason, the `fields`
-object returned when creating a form will almost always be an empty array.
 
 > Example Request:
 
@@ -85,8 +81,8 @@ end
 ```json
 {
   "form": {
-    "id": "21e1df27020b5fb4",
-    "account_id": 123,
+    "id": "frm_21e1df27020b5f",
+    "account_id": "act_1988a58e3dedab",
     "title": "Form 1099",
     "status": "pending",
     "size": 1024,
@@ -96,6 +92,11 @@ end
   }
 }
 ```
+
+When creating a **Form**, it will respond with a `pending` status almost 99.99%
+of the time. That's because forms and their fields are processed in a background
+queue and that may not happen immediately. For the same reason, the `fields`
+object returned when creating a form will almost always be an empty array.
 
 ### Supported Formats
 
@@ -113,19 +114,18 @@ without any fillable fields, will be considered invalid.
 
 ### Returns
 
-A form object given a valid attributes, otherwise it returns an
-[error object][errors].
+A form object given a valid attributes.
+
+Code | Description
+-----|-------------
+`201` | The form was created.
 
 ## Retrieving a form
-
-Retrieves the details of a form that has previously been created. Supply the
-unique form id returned from a previous request and the API will return details
-about the form.
 
 > Example Request:
 
 ```http
-GET /forms/21e1df27020b5fb4 HTTP/1.1
+GET /forms/frm_21e1df27020b5f HTTP/1.1
 User-Agent: Magilla/1.0.0
 Accept: application/json
 Authorization: Signature 123456 abcdef
@@ -140,8 +140,8 @@ form = Gorilla::Form.find('21e1df27020b5fb4')
 ```json
 {
   "form": {
-    "id": "21e1df27020b5fb4",
-    "account_id": 123,
+    "id": "frm_21e1df27020b5f",
+    "account_id": "act_1988a58e3dedab",
     "title": "New Form Title",
     "status": "processed",
     "size": 1024,
@@ -149,14 +149,13 @@ form = Gorilla::Form.find('21e1df27020b5fb4')
     "created_at": "2015-01-01T00:00:00.000Z",
     "fields": [
       {
-        "id": 123,
-        "form_id": "21e1df27020b5fb4",
+        "id": "fld_f1e30ff88db161",
+        "form_id": "frm_21e1df27020b5f",
         "field_name": "Your_First_Name_Here",
         "api_field_name": "first_name"
       },
       {
-        "id": 124,
-        "form_id": "21e1df27020b5fb4",
+        "id": "fld_10aa8c812d14dc",
         "field_name": "Your_Last_Name_Here",
         "api_field_name": "last_name"
       }
@@ -164,6 +163,10 @@ form = Gorilla::Form.find('21e1df27020b5fb4')
   }
 }
 ```
+
+Retrieves the details of a form that has previously been created. Supply the
+unique form id returned from a previous request and the API will return details
+about the form.
 
 ### Params
 
@@ -173,14 +176,18 @@ Name | Type | Required | Desc
 
 ### Returns
 
-A form object given a valid id, otherwise it returns an [error object][errors].
+A form object given a valid id.
+
+Code | Description
+-----|-------------
+`200` | The form was found.
 
 ## Updating a form
 
 > Example Request:
 
 ```http
-PUT /forms/{id} HTTP/1.1
+PUT /forms/frm_21e1df27020b5f HTTP/1.1
 User-Agent: Magilla/1.0.0
 Accept: application/json
 Authorization: Signature 123456 abcdef
@@ -192,11 +199,11 @@ Content-type: application/json
 ```
 
 ```ruby
-form = Gorilla::Form.find('21e1df27020b5fb4')
+form = Gorilla::Form.find('frm_21e1df27020b5f')
 form.save!(title: 'New Form Title')
 
 # Or..
-Gorilla::Form.update!('21e1df27020b5fb4', {
+Gorilla::Form.update!('frm_21e1df27020b5f', {
   title: 'New Form Title'
 })
 ```
@@ -206,8 +213,8 @@ Gorilla::Form.update!('21e1df27020b5fb4', {
 ```json
 {
   "form": {
-    "id": "21e1df27020b5fb4",
-    "account_id": 123,
+    "id": "frm_21e1df27020b5f",
+    "account_id": "act_1988a58e3dedab",
     "title": "New Form Title",
     "status": "processed",
     "size": 1024,
@@ -215,14 +222,14 @@ Gorilla::Form.update!('21e1df27020b5fb4', {
     "created_at": "2015-01-01T00:00:00.000Z",
     "fields": [
       {
-        "id": 123,
-        "form_id": "21e1df27020b5fb4",
+        "id": "fld_f1e30ff88db161",
+        "form_id": "frm_21e1df27020b5f",
         "field_name": "Your_First_Name_Here",
         "api_field_name": "first_name"
       },
       {
-        "id": 124,
-        "form_id": "21e1df27020b5fb4",
+        "id": "fld_10aa8c812d14dc",
+        "form_id": "frm_21e1df27020b5f",
         "field_name": "Your_Last_Name_Here",
         "api_field_name": "last_name"
       }
@@ -231,16 +238,25 @@ Gorilla::Form.update!('21e1df27020b5fb4', {
 }
 ```
 
+Updates the details of a form that has previously been created. Supply the
+unique form id returned from a previous request along with any of the permitted
+parameters.
+
 ### Params
 
  Name | Type | Required | Desc
 ------|------|----------|------
 `title` | String | No | The custom document title.
 
-## List all forms
+### Returns
 
-Returns a list of forms you've already created. The forms are returned in sorted
-order, with the most recently created forms appearing first.
+The updated form object.
+
+Code | Description
+-----|-------------
+`200` | The form was updated.
+
+## List all forms
 
 > Example Request:
 
@@ -271,8 +287,8 @@ forms = Gorilla::Form.all(page: 2)
   },
   "forms": [
     {
-      "id": "21e1df27020b5fb4",
-      "account_id": 123,
+      "id": "frm_21e1df27020b5f",
+      "account_id": "act_1988a58e3dedab",
       "title": "New Form Title",
       "status": "processed",
       "size": 1024,
@@ -280,14 +296,14 @@ forms = Gorilla::Form.all(page: 2)
       "created_at": "2015-01-01T00:00:00.000Z",
       "fields": [
         {
-          "id": 123,
-          "form_id": "21e1df27020b5fb4",
+          "id": "fld_f1e30ff88db161",
+          "form_id": "frm_21e1df27020b5f",
           "field_name": "Your_First_Name_Here",
           "api_field_name": "first_name"
         },
         {
-          "id": 124,
-          "form_id": "21e1df27020b5fb4",
+          "id": "fld_10aa8c812d14dc",
+          "form_id": "frm_21e1df27020b5f",
           "field_name": "Your_Last_Name_Here",
           "api_field_name": "last_name"
         }
@@ -297,12 +313,23 @@ forms = Gorilla::Form.all(page: 2)
 }
 ```
 
+Retrieves a list of forms you've already created.
+
 ### Params
 
 Name | Type | Required | Default | Description
 -----|------|----------|---------|-------------
 `page` | Integer | No | `1` | The page number to retrieve.
 `per_page` | Integer | No | `10` | The number of forms per page (range: `1-50`).
+
+### Returns
+
+An array of form objects in sorted order, with the most recently created forms
+appearing first.
+
+Code | Description
+-----|-------------
+`200` | We were able to retrieve the list as requested.
 
 [account]: #account
 [errors]: #error-responses
