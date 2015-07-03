@@ -43,7 +43,7 @@ Name | Type | Description
 `size` | Integer | The size of the form in bytes.
 `original_file_name` | String | The name of the file as it was uploaded.
 `created_at` | Time | The date the form was created.
-`fields` | Array | List of Field objects detected in the form.
+`fields` | Array | List of [Field][field-obj] objects detected in the form.
 
 
 ## Creating a form
@@ -366,3 +366,4 @@ Code | Description
 
 [account]: #account
 [errors]: #error-responses
+[field-obj]: #the-field-object
