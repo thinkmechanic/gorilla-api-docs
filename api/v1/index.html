@@ -60,13 +60,13 @@
 
         <div class='content-section'>
             <h1 id="introduction">Introduction</h1>
+<pre class="highlight ruby"><code><span class="n">gem</span> <span class="s1">'gorilla-io'</span>
+</code></pre>
 
 <p>Welcome to the <a href="https://gorilla.io/">Gorilla.io</a> API docs.</p>
 
 <p>Getting yourself setup to use our API with your favorite programming language is
 pretty easy.</p>
-<pre class="highlight ruby"><code><span class="n">gem</span> <span class="s1">'gorilla-io'</span>
-</code></pre>
 
             <h1 id="authentication">Authentication</h1>
 
@@ -683,6 +683,44 @@ parameters.</p>
 </tr>
 </tbody></table>
 
+<h2 id="archiving-a-form">Archiving a form</h2>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight http"><code><span class="nf">DELETE</span> <span class="nn">/forms/frm_21e1df27020b5f</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">User-Agent</span><span class="p">:</span> <span class="s">Magilla/1.0.0</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Signature 123456 abcdef</span>
+<span class="na">Content-type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+<pre class="highlight ruby"><code><span class="no">Gorilla</span><span class="o">::</span><span class="no">Form</span><span class="p">.</span><span class="nf">archive!</span><span class="p">(</span><span class="s2">"frm_21e1df27020b5f"</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="n">form</span> <span class="o">=</span> <span class="no">Gorilla</span><span class="o">::</span><span class="no">Form</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="s2">"frm_21e1df27020b5f"</span><span class="p">)</span>
+<span class="n">form</span><span class="p">.</span><span class="nf">archive!</span>
+</code></pre>
+
+<p>This endpoint will not actually destroy the form, only mark it as as archived
+and remove it from counting against your plan. Archiving a form makes it
+ineligible for use in new merges Right now, <strong>this action cannot be undone</strong>.</p>
+
+<h3 id="returns">Returns</h3>
+
+<p>No content.</p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">204</code></td>
+<td>The form was archived.</td>
+</tr>
+</tbody></table>
+
 <h2 id="list-all-forms">List all forms</h2>
 
 <blockquote>
@@ -738,7 +776,8 @@ parameters.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Retrieves a list of forms you&rsquo;ve already created.</p>
+<p>Retrieves a list of forms you&rsquo;ve already created. Only non-archived
+forms are returned in order of most recently created to least recently created.</p>
 
 <h3 id="params">Params</h3>
 
@@ -912,10 +951,90 @@ along with any of the permitted parameters.</p>
             <h1 id="merge">Merge</h1>
 
 <p>A <strong>Merge</strong> represents a real document that has been created as a result of
-supplying a previously created <a href="#form">form</a> a hash of data mapped to fillable
+supplying a previously created [form][form] a hash of data mapped to fillable
 fields in the form.</p>
 
 <h2 id="the-merge-object">The merge object</h2>
+
+<h2 id="the-form-object">The form object</h2>
+
+<blockquote>
+<p>Example Data:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mrg_21e1df27020b5f"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"act_1988a58e3dedab"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Form 1099"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processed"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"original_file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1099.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fld_f1e30ff88db161"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"form_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"frm_21e1df27020b5f"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your_First_Name_Here"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"api_field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"first_name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fld_10aa8c812d14dc"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your_Last_Name_Here"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"api_field_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_name"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="attributes">Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">id</code></td>
+<td>String</td>
+<td>The unique form id.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">account_id</code></td>
+<td>String</td>
+<td>The id for the [account][account] this form belongs to.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">title</code></td>
+<td>String</td>
+<td>The user supplied form title.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">status</code></td>
+<td>String</td>
+<td>The form processing status. Will be one of <code class="prettyprint">pending</code>, <code class="prettyprint">errored</code>, <code class="prettyprint">processed</code>, or <code class="prettyprint">archived</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">size</code></td>
+<td>Integer</td>
+<td>The size of the form in bytes.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">original_file_name</code></td>
+<td>String</td>
+<td>The name of the file as it was uploaded.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">created_at</code></td>
+<td>Time</td>
+<td>The date the form was created.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">fields</code></td>
+<td>Array</td>
+<td>List of Field objects detected in the form.</td>
+</tr>
+</tbody></table>
 
         </div>
       </div>
