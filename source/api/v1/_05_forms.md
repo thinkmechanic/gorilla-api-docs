@@ -256,6 +256,38 @@ Code | Description
 -----|-------------
 `200` | The form was updated.
 
+## Archiving a form
+
+> Example Request:
+
+```http
+DELETE /forms/frm_21e1df27020b5f HTTP/1.1
+User-Agent: Magilla/1.0.0
+Accept: application/json
+Authorization: Signature 123456 abcdef
+Content-type: application/json
+```
+
+```ruby
+Gorilla::Form.archive!("frm_21e1df27020b5f")
+
+# or
+form = Gorilla::Form.find("frm_21e1df27020b5f")
+form.archive!
+```
+
+This endpoint will not actually destroy the form, only mark it as as archived
+and remove it from counting against your plan. Archiving a form makes it
+ineligible for use in new merges Right now, **this action cannot be undone**.
+
+### Returns
+
+No content.
+
+Code | Description
+-----|-------------
+`204` | The form was archived.
+
 ## List all forms
 
 > Example Request:
@@ -313,7 +345,8 @@ forms = Gorilla::Form.all(page: 2)
 }
 ```
 
-Retrieves a list of forms you've already created.
+Retrieves a list of forms you've already created. Only non-archived
+forms are returned in order of most recently created to least recently created.
 
 ### Params
 
