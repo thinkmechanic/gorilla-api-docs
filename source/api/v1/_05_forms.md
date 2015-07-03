@@ -168,12 +168,6 @@ Retrieves the details of a form that has previously been created. Supply the
 unique form id returned from a previous request and the API will return details
 about the form.
 
-### Params
-
-Name | Type | Required | Desc
-------|------|----------|------
-`id` | String | **Yes** | The unique form id.
-
 ### Returns
 
 A form object given a valid id.
